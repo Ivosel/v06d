@@ -24,6 +24,7 @@ bool number_dialog::on_init_dialog() {
 bool number_dialog::on_ok() {
 	try {
 		num = get_int(IDC_EDIT1);
+		if (num < 0)return false;
 	}
 	catch (std::exception) {
 		return false;
@@ -32,24 +33,24 @@ bool number_dialog::on_ok() {
 }
 
 
-void main_window::on_command(int id){
-	switch(id){
-		case ID_COLOR:
-			color = get_color(*this, color);
-			break;
+void main_window::on_command(int id) {
+	switch (id) {
+	case ID_COLOR:
+		color = get_color(*this, color);
+		break;
 
-		case ID_NUMBER: {
-			number_dialog nd;
-			nd.num = number;
-			if (nd.do_modal(::GetModuleHandle(NULL), *this) == IDOK) {
+	case ID_NUMBER: {
+		number_dialog nd;
+		nd.num = number;
+		if (nd.do_modal(::GetModuleHandle(NULL), *this) == IDOK) {
 			number = nd.num;
-			}
 		}
-			break;
+	}
+				  break;
 
-		case ID_EXIT: 
-			DestroyWindow(*this); 
-			break;
+	case ID_EXIT:
+		DestroyWindow(*this);
+		break;
 	}
 	::InvalidateRect(*this, 0, true);
 }
@@ -57,7 +58,7 @@ void main_window::on_command(int id){
 void main_window::on_paint(HDC hdc) {
 	RECT rc; ::GetClientRect(*this, &rc);
 	draw_circles(hdc, rc);
-	
+
 }
 
 void main_window::draw_circles(HDC hdc, RECT rc) {
@@ -70,7 +71,7 @@ void main_window::draw_circles(HDC hdc, RECT rc) {
 	int centerY = rc.bottom / 2;
 	int circleRadius = rc.bottom / 4;
 
-	double angleStep = 360. / number ;
+	double angleStep = 360. / number;
 	for (int i = 0; i < number; i++) {
 		int x = centerX + circleRadius * cos(i * angleStep * 3.14159265 / 180);
 		int y = centerY - circleRadius * sin(i * angleStep * 3.14159265 / 180);
@@ -78,7 +79,7 @@ void main_window::draw_circles(HDC hdc, RECT rc) {
 	}
 }
 
-void main_window::on_destroy(){
+void main_window::on_destroy() {
 	::PostQuitMessage(0);
 }
 
