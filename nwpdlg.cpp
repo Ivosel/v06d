@@ -47,7 +47,7 @@ void dialog::set_int(int idCtrl, int val)
 int dialog::get_int(int idCtrl)
 {
 	BOOL b;
-	int n = ::GetDlgItemInt(*this, idCtrl, &b, true);
+	int n = ::GetDlgItemInt(*this, idCtrl, &b, false);
 	if(!b) throw std::runtime_error("not a number");
 	return n;
 }

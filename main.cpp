@@ -69,12 +69,11 @@ void main_window::draw_circles(HDC hdc, RECT rc) {
 	int centerX = rc.right / 2;
 	int centerY = rc.bottom / 2;
 	int circleRadius = rc.bottom / 4;
-	double radius = min(centerX, centerY) - circleRadius;
 
 	double angleStep = 360. / number ;
 	for (int i = 0; i < number; i++) {
-		int x = centerX + radius * cos(i * angleStep * 3.14159265 / 180);
-		int y = centerY - radius * sin(i * angleStep * 3.14159265 / 180);
+		int x = centerX + circleRadius * cos(i * angleStep * 3.14159265 / 180);
+		int y = centerY - circleRadius * sin(i * angleStep * 3.14159265 / 180);
 		Ellipse(hdc, x - circleRadius, y - circleRadius, x + circleRadius, y + circleRadius);
 	}
 }
